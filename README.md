@@ -284,11 +284,10 @@ Just replace the CSV dataset and redefine the `Churn` column accordingly.
 
 | Name | Roll Number |
 |------|------------|
-| D. Shiva Rani | B211330 |
-| S. Prathyusha | B211206 |
-| Farzana | B211117 |
+| D. Shiva Rani 
+| S. Prathyusha 
+| Farzana 
 
-**Guide:** Mr. Sujoy Sarkar  
 **Department:** Computer Science and Engineering
 
 ---
