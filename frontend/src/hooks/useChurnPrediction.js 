@@ -1,0 +1,23 @@
+import { useState } from "react";
+import { predictChurn } from "../services/api";
+
+export const useChurnPrediction = () => {
+  const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const predict = async (formData) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await predictChurn(formData);
+      setResult(data);
+    } catch (err) {
+      setError(err.response?.data?.error || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { result, loading, error, predict };
+};

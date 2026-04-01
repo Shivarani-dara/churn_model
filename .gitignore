@@ -1,0 +1,22 @@
+# env files
+.env
+**/.env
+
+# python
+__pycache__/
+**/__pycache__/
+*.pyc
+
+# jupyter
+.ipynb_checkpoints/
+
+# node
+node_modules/
+frontend/node_modules/
+
+# logs
+*.log
+
+# OS/editor
+.DS_Store
+.vscode/
