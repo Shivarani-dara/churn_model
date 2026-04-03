@@ -1,297 +1,380 @@
-# 🧠 Customer Intelligence System
-### Customer Segmentation & Churn Prediction
+# 🚀 ChurnGuard AI
 
-![Python](https://img.shields.io/badge/Python-3.10-blue) ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green) ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-latest-orange) ![License](https://img.shields.io/badge/License-MIT-yellow)
-
----
-
-## 📌 Overview
-
-The **Customer Intelligence System** is a Machine Learning project that helps businesses identify customers who are likely to **stop using their service (churn)**. It uses unsupervised learning to **segment customers into groups** and supervised learning to **predict churn probability** for each customer.
-
-Originally built for a **Telecom company** dataset, this system is designed to work across any customer-facing industry — e-commerce, banking, ride-sharing, subscription services, and more.
+### An Intelligent Customer Churn Prediction & Retention Decision System
 
 ---
 
-## 🎯 Key Features
+## 📌 1. Introduction
 
-- **Customer Segmentation** using K-Means, Hierarchical, and DBSCAN clustering
-- **Churn Prediction** using Logistic Regression, Random Forest, and Gradient Boosting
-- **Model Explainability** using SHAP values — understand *why* a customer is predicted to churn
-- **REST API** built with FastAPI for real-time predictions
-- **Interactive API docs** via Swagger UI at `/docs`
+Customer churn is one of the biggest challenges faced by businesses today. Losing customers directly impacts revenue, growth, and brand reputation.
+
+Traditional systems only **identify churn after it happens**, but modern businesses require:
+
+* Early prediction
+* Understanding of causes
+* Actionable retention strategies
+
+👉 **ChurnGuard AI** is designed to solve this problem by combining **Machine Learning, Explainable AI, Natural Language Processing, and Retrieval-Augmented Generation (RAG)** into a single intelligent system.
 
 ---
 
-## 🗂️ Project Structure
+## 🎯 2. Objective
 
+The main objective of this project is to:
+
+* Predict whether a customer is likely to churn
+* Explain the reasons behind the prediction
+* Provide actionable retention strategies
+* Allow flexible input (form, text, batch data)
+* Assist decision-making through an AI chatbot
+
+---
+
+## ⚙️ 3. System Overview
+
+ChurnGuard AI is a **full-stack AI system** consisting of:
+
+### 🔹 Frontend (User Interface)
+
+* Built using React.js
+* Allows user interaction via:
+
+  * Form input
+  * Natural language input
+  * CSV file upload
+  * Chatbot interaction
+
+### 🔹 Backend (API + Intelligence Layer)
+
+* Built using FastAPI
+* Handles:
+
+  * Data processing
+  * Model inference
+  * Feature extraction (NLP)
+  * Explainability (SHAP)
+  * RAG-based chatbot
+
+---
+
+## 🧠 4. Core Technologies Used
+
+### 🔹 Machine Learning
+
+* Model trained using customer dataset
+* Predicts churn probability
+
+### 🔹 SHAP (Explainable AI)
+
+* Identifies **which features influenced prediction**
+* Helps answer:
+
+  > “Why is this customer likely to churn?”
+
+---
+
+### 🔹 Natural Language Processing (NLP)
+
+* Converts user text into structured features
+* Example:
+
+  ```
+  Input:
+  "Customer has 2 years tenure, pays $80 monthly"
+
+  Output:
+  tenure = 24
+  MonthlyCharges = 80
+  ```
+
+---
+
+### 🔹 RAG (Retrieval-Augmented Generation)
+
+* Combines:
+
+  * Model output
+  * Domain knowledge
+* Generates:
+
+  * Personalized retention strategies
+
+---
+
+### 🔹 Full Stack Integration
+
+* React → API → ML → AI → Response
+
+---
+
+## 🔄 5. System Workflow
+
+```id="flow123"
+User Input (Form / Text / CSV)
+        ↓
+Frontend (React UI)
+        ↓
+FastAPI Backend
+        ↓
+[If text] → Feature Extraction (LLM)
+        ↓
+Structured Input Data
+        ↓
+ML Model Prediction
+        ↓
+SHAP Explanation
+        ↓
+Retention Logic + RAG Chatbot
+        ↓
+Final Response (UI)
 ```
-customer-intelligence/
+
+---
+
+## 🧩 6. Functional Modules
+
+### 🔹 6.1 Prediction Module
+
+* Accepts:
+
+  * tenure
+  * monthly charges
+* Outputs:
+
+  * churn probability
+  * prediction label
+  * risk level
+
+---
+
+### 🔹 6.2 Explainability Module
+
+* Uses SHAP values
+* Displays:
+
+  * Top influencing features
+  * Positive/negative impact
+
+---
+
+### 🔹 6.3 NLP Module
+
+* Uses LLM (Groq API)
+* Extracts:
+
+  * Numerical and categorical features
+* Handles missing values using medians
+
+---
+
+### 🔹 6.4 Retention Recommendation Module
+
+Two approaches:
+
+#### Rule-based:
+
+* Contract → suggest long-term plan
+* No security → suggest upgrade
+* High charges → suggest discounts
+
+#### AI-based:
+
+* Uses RAG chatbot
+* Generates:
+
+  * Context-aware retention strategies
+
+---
+
+### 🔹 6.5 Chatbot Module 🤖
+
+* Interactive UI component
+
+* Accepts user queries like:
+
+  > “How to retain this customer?”
+
+* Uses:
+
+  * Model prediction
+  * SHAP insights
+
+* Returns:
+
+  * Step-by-step retention plan
+
+---
+
+### 🔹 6.6 Batch Prediction Module
+
+* Upload CSV file
+
+* Columns:
+
+  * tenure
+  * monthlyCharges
+
+* Outputs:
+
+  * Prediction per customer
+  * Risk classification
+
+---
+
+## 🗂️ 7. Project Structure
+
+```id="structure123"
+project/
 │
-├── Customer_Intelligence_System.ipynb   ← Full ML pipeline (training)
-├── app.py                               ← FastAPI application
-├── churn_model.pkl                      ← Trained model (generated after training)
-├── feature_names.pkl                    ← Feature list (generated after training)
-├── requirements.txt                     ← Python dependencies
-├── Dockerfile                           ← Docker configuration
-└── README.md                            ← You are here
+├── backend/
+│   ├── app.py                 # Main API
+│   ├── rag_helper.py          # RAG logic
+│   ├── model/
+│   │   ├── churn_model.pkl
+│   │   ├── feature_names.pkl
+│   │   └── explain.py
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Form.js
+│   │   │   ├── Graph.js
+│   │   │   ├── ResultCard.js
+│   │   │   ├── TextPredict.js
+│   │   │   ├── BatchUpload.js
+│   │   │   ├── BatchResult.js
+│   │   │   └── RetentionChat.js
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── App.js
+│
+├── requirements.txt
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-## 📊 Dataset
+## 🛠️ 8. Tech Stack
 
-**Telco Customer Churn** — IBM Sample Dataset
-
-- **Source:** [Kaggle — Telco Customer Churn](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
-- **Size:** 7,043 customers × 21 features
-- **Target:** `Churn` column (Yes/No → 1/0)
-
-### Key Columns
-
-| Column | Description |
-|--------|-------------|
-| `tenure` | Months the customer has been with the company |
-| `MonthlyCharges` | Monthly bill amount |
-| `TotalCharges` | Total amount paid |
-| `Contract` | Contract type (Month-to-month / 1yr / 2yr) |
-| `InternetService` | DSL / Fiber optic / None |
-| `Churn` | **Target** — Did the customer leave? |
+| Layer          | Technology             |
+| -------------- | ---------------------- |
+| Frontend       | React.js, Tailwind CSS |
+| Backend        | FastAPI                |
+| ML             | Scikit-learn           |
+| Explainability | SHAP                   |
+| NLP            | Groq LLM               |
+| RAG            | Sentence Transformers  |
+| Data           | Pandas, NumPy          |
 
 ---
 
-## ⚙️ How It Works
+## 🚀 9. How to Run
 
-```
-Raw Dataset
-    ↓
-Data Preprocessing (encoding, scaling, missing values)
-    ↓
-K-Means Clustering (segments customers into 3 groups)
-    ↓
-Add 'Segment' as a feature
-    ↓
-Train 3 Classification Models
-    ↓
-Compare & Select Best Model (Logistic Regression — ROC-AUC: 0.84)
-    ↓
-Deploy as FastAPI REST API
-```
+### Backend
 
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Python 3.10+
-- pip
-- Git
-
----
-
-### Step 1 — Clone the Repository
-
-```bash
-git clone https://github.com/yourusername/customer-intelligence.git
-cd customer-intelligence
-```
-
----
-
-### Step 2 — Install Dependencies
-
-```bash
+```bash id="run1"
+cd backend
 pip install -r requirements.txt
-```
-
-> If you're behind a proxy, set it first:
-> ```bash
-> pip install -r requirements.txt --proxy http://username:password@proxyip:port
-> ```
-
----
-
-### Step 3 — Download the Dataset
-
-1. Go to [Kaggle — Telco Customer Churn](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
-2. Download `WA_Fn-UseC_-Telco-Customer-Churn.csv`
-3. Place it in the **root of the project folder**
-
----
-
-### Step 4 — Train the Model
-
-Open `Customer_Intelligence_System.ipynb` in Jupyter Notebook and run all cells **top to bottom**.
-
-```bash
-jupyter notebook Customer_Intelligence_System.ipynb
-```
-
-This will:
-- Preprocess the data
-- Run 3 clustering algorithms and pick the best (K-Means)
-- Train 3 classification models and compare them
-- Save the best model as `churn_model.pkl`
-- Save feature names as `feature_names.pkl`
-
----
-
-### Step 5 — Start the API
-
-```bash
 uvicorn app:app --reload
 ```
 
-The API will be running at: `http://127.0.0.1:8000`
+---
+
+### Frontend
+
+```bash id="run2"
+cd frontend
+npm install
+npm start
+```
 
 ---
 
-### Step 6 — Test the API
+## 🔐 10. Environment Setup
 
-Open your browser and go to:
-
-```
-http://127.0.0.1:8000/docs
+```bash id="env1"
+export GROQ_API_KEY=your_api_key_here
 ```
 
-This opens the **Swagger UI** where you can test predictions interactively.
+---
 
-#### Sample Request (POST `/predict`)
+## 📊 11. Sample Input & Output
 
-```json
+### Input:
+
+```json id="sample1"
 {
-  "gender": 1,
-  "SeniorCitizen": 0,
-  "Partner": 1,
-  "Dependents": 0,
-  "tenure": 5,
-  "PhoneService": 1,
-  "MultipleLines": 0,
-  "InternetService": 1,
-  "OnlineSecurity": 0,
-  "OnlineBackup": 0,
-  "DeviceProtection": 0,
-  "TechSupport": 0,
-  "StreamingTV": 0,
-  "StreamingMovies": 0,
-  "Contract": 0,
-  "PaperlessBilling": 1,
-  "PaymentMethod": 2,
-  "MonthlyCharges": 85.0,
-  "TotalCharges": 425.0,
-  "Segment": 0
+  "tenure": 12,
+  "monthlyCharges": 50
 }
 ```
 
-#### Sample Response
+### Output:
 
-```json
+```json id="sample2"
 {
-  "churn_probability": 0.7294,
-  "prediction": "Churn"
+  "churn_probability": 0.35,
+  "prediction": "No Churn",
+  "risk_level": "Low",
+  "reasons": [...],
+  "retention_recommendations": {...}
 }
 ```
 
 ---
 
-## 📈 Model Results
+## 💡 12. Key Contributions
 
-### Clustering Comparison
-
-| Algorithm | Silhouette Score | Result |
-|-----------|-----------------|--------|
-| **K-Means** | **0.4514** | ✅ Best |
-| Hierarchical | 0.3960 | OK |
-| DBSCAN | N/A (1 cluster) | ❌ Failed |
-
-### Classification Comparison
-
-| Model | Accuracy | ROC-AUC |
-|-------|----------|---------|
-| **Logistic Regression** | **0.7991** | **0.8403** ✅ |
-| Random Forest | 0.7921 | 0.8261 |
-| Gradient Boosting | 0.7878 | 0.8257 |
-
-> **ROC-AUC > 0.80 = Good model.** Logistic Regression was selected as the best model.
+* Integration of ML + NLP + RAG in one system
+* Explainable predictions using SHAP
+* Real-time API with UI
+* Chatbot-driven decision support
+* Batch processing capability
 
 ---
 
-## 🔢 Feature Encoding Reference
+## ⚠️ 13. Limitations
 
-When sending data to the API, use these encoded values:
-
-| Feature | Values |
-|---------|--------|
-| `gender` | 0 = Female, 1 = Male |
-| `SeniorCitizen` | 0 = No, 1 = Yes |
-| `Partner` | 0 = No, 1 = Yes |
-| `Dependents` | 0 = No, 1 = Yes |
-| `PhoneService` | 0 = No, 1 = Yes |
-| `MultipleLines` | 0 = No, 1 = Yes, 2 = No phone service |
-| `InternetService` | 0 = DSL, 1 = Fiber optic, 2 = No |
-| `Contract` | 0 = Month-to-month, 1 = One year, 2 = Two year |
-| `PaymentMethod` | 0 = Bank transfer, 1 = Credit card, 2 = Electronic check, 3 = Mailed check |
-| `Segment` | 0, 1, or 2 (from K-Means clustering) |
+* Depends on dataset quality
+* LLM responses may vary
+* Requires API key for NLP features
 
 ---
 
-## 🐳 Docker (Optional)
+## 🔮 14. Future Enhancements
 
-```bash
-# Build
-docker build -t churn-api .
-
-# Run
-docker run -p 8000:8000 churn-api
-```
-
-Then open `http://127.0.0.1:8000/docs`
+* Deployment (cloud-based)
+* Real-time monitoring dashboard
+* CRM integration
+* Deep learning models
+* Multilingual chatbot
 
 ---
 
-## 🌍 Adapting to Other Industries
+## 👩‍💻 15. Team
 
-This system works for **any industry** by swapping the dataset:
+* D. Shivarani
+* Team Members
 
-| Industry | Churn Definition |
-|----------|-----------------|
-| E-commerce | No purchase in 60 days |
-| Ride-sharing | No ride in 30 days |
-| Banking | Account closed / inactive |
-| OTT/Streaming | Subscription cancelled |
-
-Just replace the CSV dataset and redefine the `Churn` column accordingly.
+Department: Computer Science Engineering
 
 ---
 
-## 🛠️ Tech Stack
+## 📄 16. Conclusion
 
-| Tool | Purpose |
-|------|---------|
-| Python | Core language |
-| Pandas, NumPy | Data processing |
-| Scikit-learn | ML models & clustering |
-| SHAP | Model explainability |
-| FastAPI | REST API |
-| Uvicorn | ASGI server |
-| Joblib | Model serialization |
-| Docker | Containerization |
+ChurnGuard AI transforms traditional churn prediction into a **complete intelligent decision system**.
+
+It not only predicts churn but also:
+
+✔ Explains reasons
+✔ Suggests actions
+✔ Assists business decisions
 
 ---
 
-## 👩‍💻 Team
+⭐ *This project demonstrates real-world application of AI in business analytics.*
 
-| Name | Roll Number |
-|------|------------|
-| D. Shiva Rani 
-| S. Prathyusha 
-| Farzana 
 
-**Department:** Computer Science and Engineering
 
----
 
-## 📄 License
-
-This project is for academic purposes.
