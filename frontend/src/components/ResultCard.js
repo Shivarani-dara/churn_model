@@ -4,6 +4,8 @@ import Explanation from "./Explanation";
 import RetentionChat from "./RetentionChat";
 
 function ResultCard({ data }) {
+  if (!data) return null;
+
   const isChurn = data.prediction === "Churn";
 
   return (
@@ -13,7 +15,7 @@ function ResultCard({ data }) {
           RISK ASSESSMENT
         </div>
 
-        <div className="flex items-center gap-3 mb-2">
+        <div className="flex items-center gap-3 mb-2 flex-wrap">
           <h2
             className={`font-syne text-4xl font-bold ${
               isChurn ? "text-red-400" : "text-green-400"
@@ -33,17 +35,29 @@ function ResultCard({ data }) {
           </span>
         </div>
 
-        <div className="text-sm text-gray-400 mb-6">
+        <div className="text-sm text-gray-400 mb-2">
           Churn probability:{" "}
           <span className="text-white font-medium">
-            {(data.churn_probability * 100).toFixed(1)}%
+            {(Number(data.churn_probability || 0) * 100).toFixed(1)}%
           </span>
         </div>
 
-        <Graph reasons={data.reasons} retention={data.retention_recommendations || {}} />
-        <Explanation text={data.explanation} />
+        <div className="text-sm text-gray-400 mb-6">
+          Risk level:{" "}
+          <span className="text-white font-medium">
+            {data.risk_level || "N/A"}
+          </span>
+        </div>
+
+        <Graph
+          reasons={data.reasons || []}
+          retentionRecommendations={data.retention_recommendations || {}}
+        />
+
+        <Explanation text={data.explanation || "No explanation available."} />
+
         <RetentionChat
-          response={data.chatbot_retention_response}
+          response={data.chatbot_retention_response || ""}
           predictionData={data}
         />
       </div>

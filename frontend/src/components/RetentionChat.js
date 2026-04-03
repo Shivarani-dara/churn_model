@@ -8,36 +8,47 @@ function RetentionChat({ response, predictionData = {} }) {
   const chatEndRef = useRef(null);
 
   useEffect(() => {
-    if (response) {
+    if (response && response.trim()) {
       setMessages([{ text: response, sender: "ai" }]);
+    } else {
+      setMessages([]);
     }
-  }, [response]);
+    setInput("");
+    setIsTyping(false);
+  }, [response, predictionData]);
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
   const sendMessage = async (messageText = input) => {
-    if (!messageText.trim()) return;
+    const trimmedMessage = messageText.trim();
+    if (!trimmedMessage) return;
 
-    const userMsg = { text: messageText, sender: "user" };
+    const userMsg = { text: trimmedMessage, sender: "user" };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setIsTyping(true);
 
     try {
       const res = await axios.post("http://127.0.0.1:8000/chat_retention", {
-        user_message: messageText,
+        user_message: trimmedMessage,
         prediction_data: predictionData,
       });
 
-      const aiReply = res.data.reply || "No response generated.";
+      const aiReply =
+        res?.data?.reply && String(res.data.reply).trim()
+          ? res.data.reply
+          : "No response generated.";
+
       setMessages((prev) => [...prev, { text: aiReply, sender: "ai" }]);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
         {
-          text: err.response?.data?.error || "Failed to get chatbot response.",
+          text:
+            err?.response?.data?.error ||
+            "Failed to get chatbot response.",
           sender: "ai",
         },
       ]);
@@ -59,7 +70,9 @@ function RetentionChat({ response, predictionData = {} }) {
           <span className="text-white text-sm">🤖</span>
         </div>
         <div>
-          <h3 className="font-semibold text-purple-400">AI Retention Assistant</h3>
+          <h3 className="font-semibold text-purple-400">
+            AI Retention Assistant
+          </h3>
           <p className="text-xs text-gray-500">Ask follow-up questions</p>
         </div>
       </div>
@@ -77,11 +90,13 @@ function RetentionChat({ response, predictionData = {} }) {
                   : "bg-purple-600 text-white rounded-tr-none"
               }`}
             >
-              {msg.text.split("\n").map((line, i) => (
-                <p key={i} className="whitespace-pre-line">
-                  {line}
-                </p>
-              ))}
+              {String(msg.text)
+                .split("\n")
+                .map((line, i) => (
+                  <p key={i} className="whitespace-pre-line">
+                    {line}
+                  </p>
+                ))}
             </div>
           </div>
         ))}
@@ -99,19 +114,27 @@ function RetentionChat({ response, predictionData = {} }) {
 
       <div className="px-4 pb-3 flex flex-wrap gap-2">
         <button
-          onClick={() => handleQuickAction("What are the top 3 retention steps for this customer?")}
+          onClick={() =>
+            handleQuickAction("What are the top 3 retention steps for this customer?")
+          }
           className="text-xs bg-[#2d3748] hover:bg-[#4a5568] text-gray-300 px-3 py-1 rounded-full transition"
         >
           Top retention steps
         </button>
+
         <button
-          onClick={() => handleQuickAction("What should we do first to reduce churn risk?")}
+          onClick={() =>
+            handleQuickAction("What should we do first to reduce churn risk?")
+          }
           className="text-xs bg-[#2d3748] hover:bg-[#4a5568] text-gray-300 px-3 py-1 rounded-full transition"
         >
           What to do first?
         </button>
+
         <button
-          onClick={() => handleQuickAction("How can pricing be improved for this customer?")}
+          onClick={() =>
+            handleQuickAction("How can pricing be improved for this customer?")
+          }
           className="text-xs bg-[#2d3748] hover:bg-[#4a5568] text-gray-300 px-3 py-1 rounded-full transition"
         >
           Pricing advice
